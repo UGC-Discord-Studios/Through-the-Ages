@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Through the Ages</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="title-bar">
+    <div class="title-bar-text">Through the Ages</div>
+    <div class="title-bar-controls">
+      <button id="window-minimize" class="window-btn">_</button>
+      <button id="window-maximize" class="window-btn">□</button>
+      <button id="window-close" class="window-btn close">×</button>
+    </div>
+  </div>
+  <div class="container">
+    <header>
+      <h1>Through the Ages</h1>
+      <p>A progression-based Minecraft journey.</p>
+    </header>
+
+    <div id="profile-section">
+      <h2>Select Playthrough</h2>
+      <div id="profile-list" class="grid-list">
+        <!-- Profiles injected here -->
+      </div>
+      <div style="margin-top: 15px;">
+        <input type="text" id="new-profile-name" placeholder="New Playthrough Name">
+        <button id="create-profile-btn" class="primary-btn">Create</button>
+      </div>
+    </div>
+
+    <div id="login-section" class="hidden">
+      <p>Please log in with your Microsoft account to begin.</p>
+      <button id="login-btn">Log In</button>
+    </div>
+
+    <div id="launcher-section" class="hidden">
+      <div class="tabs">
+        <button class="tab-btn active" data-target="tab-main">Main</button>
+        <button class="tab-btn" data-target="tab-news">News</button>
+        <button class="tab-btn" data-target="tab-achievements">Achievements</button>
+        <button class="tab-btn" data-target="tab-screenshots">Screenshots</button>
+        <button class="tab-btn" data-target="tab-whitelist">Server Whitelist</button>
+        <button class="tab-btn" data-target="tab-dashboard">Dashboard</button>
+        <button class="tab-btn" data-target="tab-roadmap">Roadmap</button>
+        <button class="tab-btn" data-target="tab-resourcepacks">Resource Packs</button>
+        <button class="tab-btn" data-target="tab-settings">Settings</button>
+      </div>
+
+      <div id="tab-main" class="tab-content active">
+        <div class="profile-info">
+          <p>Logged in as: <span id="username"></span></p>
+          <p style="font-size: 14px; margin-top: 5px; color: var(--text-secondary);">Total Playtime: <span id="playtime-text">0h 0m</span></p>
+        </div>
+
+        <div class="version-info">
+          <h2>Current Era: <span id="current-version">b1.5</span></h2>
+          <div class="progress-container">
+            <p>Goal: <span id="progress-text">0 / 5</span> Achievements</p>
+            <progress id="achievement-progress" value="0" max="5"></progress>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="launch-btn" class="primary-btn">Play Client</button>
+          <button id="advance-btn" class="primary-btn hidden" style="background-color: #10b981; color: white;">Advance Era</button>
+          <button id="reset-btn" class="secondary-btn">Reset Progress</button>
+          <button id="skip-btn" class="secondary-btn" style="background-color: #8b5cf6;">Skip Version</button>
+        </div>
+        <p id="status-msg"></p>
+      </div>
+
+      <div id="tab-news" class="tab-content hidden">
+        <h2>News & Updates</h2>
+        <div id="news-list" class="news-container">
+          <!-- News items populated here -->
+          <p style="color: var(--text-secondary);">Loading news...</p>
+        </div>
+      </div>
+
+      <div id="tab-achievements" class="tab-content hidden">
+        <h2>Achievements</h2>
+        <div id="achievements-list" class="grid-list">
+          <!-- Achievements will be populated here -->
+        </div>
+      </div>
+
+      <div id="tab-screenshots" class="tab-content hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h2>Screenshots Gallery</h2>
+          <button id="refresh-screenshots-btn" class="secondary-btn">Refresh</button>
+        </div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 15px;">Showing screenshots for the current era.</p>
+        <div id="screenshots-list" class="screenshot-grid">
+          <!-- Screenshots populated here -->
+        </div>
+      </div>
+
+      <div id="tab-whitelist" class="tab-content hidden">
+        <h2>Server Whitelist</h2>
+        <p>Add usernames to the server whitelist (only applies when hosting).</p>
+        <div class="whitelist-input">
+          <input type="text" id="whitelist-name" placeholder="Minecraft Username">
+          <button id="add-whitelist-btn" class="primary-btn">Add</button>
+        </div>
+        <div id="whitelist-list" class="whitelist-container">
+          <!-- Whitelist entries will be populated here -->
+        </div>
+      </div>
+
+
+
+      <div id="tab-resourcepacks" class="tab-content hidden">
+        <h2>Resource Packs</h2>
+        <p>Import resource pack .zip files to the current era.</p>
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+          <input type="file" id="import-rp-input" accept=".zip" style="display: none;">
+          <button id="import-rp-btn" class="primary-btn">Import .zip</button>
+        </div>
+        <div id="rp-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 250px; overflow-y: auto;">
+          <!-- Resource packs populated here -->
+        </div>
+      </div>
+
+      <div id="tab-settings" class="tab-content hidden">
+        <h2>Settings</h2>
+
+        <div class="setting-group" style="margin-top: 15px;">
+          <label>Theme & Colors:</label>
+          <div style="display: flex; gap: 10px; margin-top: 5px;">
+            <select id="setting-theme" style="flex: 1;">
+              <option value="dark">Dark Theme</option>
+              <option value="light">Light Theme</option>
+            </select>
+            <select id="setting-accent" style="flex: 1;">
+              <option value="emerald">Emerald (Default)</option>
+              <option value="blue">Blue</option>
+              <option value="purple">Purple</option>
+              <option value="red">Red</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="setting-group" style="margin-top: 15px;">
+          <label>Memory Allocation (Min - Max):</label>
+          <div style="display: flex; gap: 10px; margin-top: 5px;">
+            <input type="text" id="setting-ram-min" placeholder="e.g. 2G" value="2G">
+            <input type="text" id="setting-ram-max" placeholder="e.g. 4G" value="4G">
+          </div>
+        </div>
+
+        <div class="setting-group" style="margin-top: 15px;">
+          <label style="display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="setting-betacraft" checked>
+            Enable BetaCraft Proxy (Fixes old skins and sounds)
+          </label>
+        </div>
+
+        <div class="setting-group" style="margin-top: 15px;">
+          <h3>Java Executable Paths</h3>
+          <p style="font-size: 12px; color: #aaa; margin-bottom: 5px;">Leave blank to attempt auto-detection. If not found, you will be prompted to download.</p>
+          
+          <label>Java 8 (For Beta - 1.16):</label>
+          <input type="text" id="setting-java8" placeholder="Auto-detect or enter java.exe path" style="width: 100%; margin-bottom: 10px;">
+          
+          <label>Java 17 (For 1.17 - 1.20.4):</label>
+          <input type="text" id="setting-java17" placeholder="Auto-detect or enter java.exe path" style="width: 100%; margin-bottom: 10px;">
+          
+          <label>Java 21 (For 1.20.5+):</label>
+          <input type="text" id="setting-java21" placeholder="Auto-detect or enter java.exe path" style="width: 100%; margin-bottom: 10px;">
+        </div>
+        
+        <div class="setting-group" style="margin-top: 15px;">
+          <h3>Multiplayer 1.7 Transition</h3>
+          <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 5px;">Use this to securely transfer your beta achievements to the host before they upgrade the server to 1.7.</p>
+          <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-end;">
+            <div style="flex: 1;">
+              <label>Host's IP Address (Clients Only):</label>
+              <input type="text" id="sync-host-ip" placeholder="e.g. 192.168.1.50" style="width: 100%;">
+            </div>
+            <button id="client-sync-btn" class="primary-btn" style="height: 36px;">Sync My Stats</button>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button id="host-sync-start-btn" class="secondary-btn">Host: Start Sync Server</button>
+            <button id="host-sync-stop-btn" class="secondary-btn hidden" style="border-color: #ef4444; color: #ef4444;">Host: Stop Sync Server</button>
+            <span id="sync-status-msg" style="font-size: 14px; margin-left: 10px;"></span>
+          </div>
+        </div>
+
+        <button id="save-settings-btn" class="primary-btn" style="margin-top: 15px;">Save Settings</button>
+        <span id="settings-msg" style="margin-left: 10px; color: #10b981;"></span>
+      </div>
+
+      <div id="tab-dashboard" class="tab-content hidden">
+        <h2>Server Dashboard</h2>
+        <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 15px;">
+          <button id="host-btn" class="primary-btn">Start Server</button>
+          <button id="stop-server-btn" class="secondary-btn" disabled>Stop Server</button>
+        </div>
+        <div style="display: flex; gap: 20px; margin-bottom: 15px;">
+          <div style="flex: 1; background: var(--bg-tertiary); padding: 10px; border-radius: 8px;">
+            <h3>Stats</h3>
+            <p style="font-size: 14px; margin-top: 10px;">Status: <span id="dash-status" style="color: #ef4444;">Offline</span></p>
+            <p style="font-size: 14px;">CPU: <span id="dash-cpu">0.0%</span></p>
+            <p style="font-size: 14px;">RAM: <span id="dash-ram">0 MB</span></p>
+            <p style="font-size: 14px;">IP Address (UPnP): <span id="dash-ip" style="user-select: all; font-family: monospace;">Waiting...</span></p>
+          </div>
+          <div style="flex: 1; background: var(--bg-tertiary); padding: 10px; border-radius: 8px;">
+            <h3>Live Players (<span id="dash-player-count">0</span>)</h3>
+            <ul id="dash-player-list" style="font-size: 14px; margin-top: 10px; padding-left: 20px; max-height: 100px; overflow-y: auto;">
+            </ul>
+          </div>
+        </div>
+        <div class="interactive-console">
+          <h3>Server Console</h3>
+          <div id="dash-console" style="background: #000; color: #fff; font-family: monospace; height: 150px; overflow-y: auto; padding: 10px; border-radius: 8px; margin-bottom: 10px; font-size: 12px; white-space: pre-wrap;"></div>
+          <div style="display: flex; gap: 8px; width: 100%; align-items: center;">
+            <input type="text" id="dash-console-input" placeholder="Type a server command (e.g., /say hello)" style="flex: 1; min-width: 0; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 4px; outline: none;">
+            <button id="dash-console-btn" style="width: auto; margin-top: 0; flex-shrink: 0; background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; outline: none; box-shadow: none;" title="Send Command">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-roadmap" class="tab-content hidden">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+          <h2>Roadmap Editor</h2>
+          <button id="save-roadmap-btn" class="primary-btn">Save Changes</button>
+        </div>
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 10px;">Customize the version sequence and target achievements. Changes require a restart.</p>
+        <div style="max-width: 700px; margin: 0 auto;">
+          <div style="display: grid; grid-template-columns: 1fr 100px auto; gap: 10px; margin-bottom: 5px; padding: 0 10px;">
+            <div style="font-size: 12px; color: var(--text-secondary); text-align: left;">Version</div>
+            <div style="font-size: 12px; color: var(--text-secondary); text-align: left;">Target Achvs</div>
+            <div style="width: 40px;"></div>
+          </div>
+          <div id="roadmap-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; padding-right: 10px;">
+            <!-- Roadmap items injected here -->
+          </div>
+          <button id="add-roadmap-btn" class="secondary-btn" style="margin-top: 15px; width: 100%;">+ Add Version</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="app-version-label" style="position: fixed; bottom: 8px; right: 12px; font-size: 11px; color: var(--text-secondary); pointer-events: none; z-index: 9999;"></div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>

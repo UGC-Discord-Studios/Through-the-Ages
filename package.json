@@ -1,0 +1,52 @@
+{
+  "name": "mc-tta",
+  "version": "0.4.1-beta",
+  "description": "Through the Ages Minecraft Launcher",
+  "repository": "https://github.com/UGC-Discord-Studios/Through-the-Ages",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.mc-tta.launcher",
+    "productName": "Through the Ages",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Through the Ages",
+      "uninstallDisplayName": "Through the Ages Uninstaller"
+    },
+    "asarUnpack": [
+      "jre8/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "publish": ["github"]
+  },
+  "keywords": [],
+  "author": "UGC Discord Group",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^43.2.0",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "@sentry/electron": "^7.16.0",
+    "discord-rpc": "^4.0.1",
+    "electron-updater": "^6.8.9",
+    "minecraft-launcher-core": "^3.18.2",
+    "msmc": "^5.0.5",
+    "nat-upnp": "^1.1.1",
+    "pidusage": "^4.0.1"
+  }
+}

@@ -1,0 +1,7 @@
+Title: Welcome to Through the Ages
+Date: 2026-07-31
+Body: The launcher is in active development! We have just added this News tab and a Screenshots Gallery. Stay tuned for more features.
+
+Title: Launcher Beta Release
+Date: 2026-07-28
+Body: Welcome to the first beta of the Through the Ages launcher. Begin your journey from Beta 1.5 and progress through the history of Minecraft!
