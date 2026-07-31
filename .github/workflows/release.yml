@@ -1,1 +1,38 @@
+name: Build and Release
 
+on:
+  push:
+    tags:
+      - 'v*' # Triggers the workflow when you push a tag like "v0.4.1"
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    # These permissions are required for electron-builder to upload the release
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Download JRE 8
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u412-b08/OpenJDK8U-jre_x64_windows_hotspot_8u412b08.zip" -OutFile jre8.zip
+          Expand-Archive -Path jre8.zip -DestinationPath jre8 -Force
+          Remove-Item jre8.zip
+
+      - name: Build and Publish
+        run: npx electron-builder --win --x64 --publish always
+        env:
+          # This token is automatically provided by GitHub Actions!
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
